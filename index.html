@@ -5,7 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do-App</title>
 </head>
+<style>
+    .main-container{
+        height: 600px;
+        width: 550px;
+        border: 1px solid black;  
+        margin: 40px auto;
+        padding: 10px;
+        }
+        .heading{
+           text-align: center;
+           font-size: 50px;
+        }
+        .input-task{
+            height: 300px;
+        }
+        .enter-task-container{
+           display: flex;
+           justify-content: center;
+           gap: 15px;
+           margin: 15px;
+        }
+        .enter-task-box{
+            width: 70%;
+            height: 30px;
+            padding: 5px;
+            font-size: 20px;
+        }
+        .add-btn{
+            font-size: 20px;
+            padding: 5px;
+        }
+</style>
 <body>
+    <div class="main-container">
+    <h1 class="heading">To Do List</h1>
+
+    <div class="input-task"></div>
+
+    <div class="enter-task-container">
+        <input type="text" placeholder="Enter a Task..." class="enter-task-box">
+        <button type="button" class="add-btn">Add Task</button>
+        </div>
+    </div>
     
 </body>
 </html>
