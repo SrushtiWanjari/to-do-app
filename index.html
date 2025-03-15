@@ -65,7 +65,22 @@
     </div>
 
     <script>
+       const Task = [];
+
+
+       function loadtask(){
+        const allTask = JSON.parse(localStorage.getItem("allTask"));
+
+        if(allTask){
+            task.push(allTask);
+        }
+
+        loadTasks();
+       }
+       loadtask();
+
        
+
     </script>
     
 </body>
