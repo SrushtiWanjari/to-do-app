@@ -3,85 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-Do-App</title>
+    <title>Document</title>
 </head>
-<style>
-    body{
-        background-color:  #F8E7F6;
-    }
-    .main-container{
-        height: 600px;
-        width: 550px;
-        border: none;
-        box-shadow: 0 0 13px 0 black;
-        margin: 40px auto;
-        padding: 10px;
-        background-color:#F5F5F5;
-        border-radius: 7px;
-        }
-
-        .heading{
-           text-align: center;
-           font-size: 50px;
-        }
-        .input-task{
-            height: 300px;
-        }
-        .enter-task-container{
-           display: flex;
-           justify-content: center;
-          
-           gap: 15px;
-           margin: 15px;
-        }
-        .enter-task-box{
-            width: 70%;
-            height: 30px;
-            padding: 5px;
-            font-size: 20px;
-            border-radius: 10px;
-           
-        }
-        .add-btn{
-            font-size: 20px;
-            padding:10px;
-            border-radius: 10px;
-            border: none;
-            cursor: pointer;
-            background-color: #4B164C;
-            color: white;
-        }
-</style>
 <body>
-    <div class="main-container">
-    <h1 class="heading">To Do List</h1>
-
-    <div class="input-task" id="input-task"></div>
-
-    <div class="enter-task-container">
-        <input type="text" placeholder="Enter a Task..." class="enter-task-box" id="task-box">
-        <button type="button" class="add-btn">Add Task</button>
-        </div>
-    </div>
-
-    <script>
-       const Task = [];
-
-
-       function loadtask(){
-        const allTask = JSON.parse(localStorage.getItem("allTask"));
-
-        if(allTask){
-            task.push(allTask);
-        }
-
-        loadTasks();
-       }
-       loadtask();
-
-       
-
-    </script>
     
 </body>
 </html>
