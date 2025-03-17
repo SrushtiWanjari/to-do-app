@@ -47,22 +47,25 @@
       padding: 10px;
       position: relative;
       border-radius: 10px;
-
     }
-    .task-card-title{
-font-size: 20px;
-margin: 0;
-
+    .task-card-title {
+      font-size: 20px;
+      margin: 0;
     }
-    .task-card-priority{
-position: absolute;
-right: 10px;
-top: 10px;
-width: 80px;
-text-align: center;
-border-radius: 20px;
-background-color:  #ebe5c2;
-
+    .task-card-priority {
+      position: absolute;
+      right: 40px;
+      top: 10px;
+      width: 80px;
+      text-align: center;
+      border-radius: 20px;
+      background-color: #ebe5c2;
+    }
+    .del-icon {
+      height: 20px;
+      position: absolute;
+      right: 10px;
+      top: 10px;
     }
   </style>
   <body>
@@ -113,10 +116,16 @@ background-color:  #ebe5c2;
           todoListElement.innerHTML += `<div class="task-card">
         <h3 class="task-card-title">${taskObj.task}</h3>
         <span class="task-card-priority">${taskObj.priority}</span>
+        <img src="bin.png" onclick=" removeTask(${i})"class="del-icon"/>
         </div>`;
         }
       }
-      renderToDoList(tasks);
+
+      function removeTask(taskIndex) {
+        tasks.splice(taskIndex, 1);
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+        renderToDoList(tasks);
+      }
     </script>
   </body>
 </html>
