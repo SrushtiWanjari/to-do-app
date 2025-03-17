@@ -3,9 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>To-Do-App</title>
 </head>
+<style>
+    body{
+        margin: 0;
+        padding: 0;
+        background-color: #F8F3D9;
+    }
+    .main-container{
+        background-color: #504B38;
+        padding: 10px 20px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+    }
+</style>
 <body>
-    
+    <h1>To Do List</h1>
+
+    <div  class="main-container">
+    <input type="text" id="task">
+    <select id="priority">
+        <option value="high">High</option>
+        <option value="medium">Medium</option>
+        <option value="low">Low</option>
+    </select>
+
+    <button onclick="addTask()">Add Task</button>
+</div>
 </body>
 </html>
