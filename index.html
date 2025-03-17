@@ -1,77 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To-Do-App</title>
-</head>
-<style>
-    body{
-        margin: 0;
-        padding: 0;
-        background-color: #F8F3D9;
+  </head>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f8f3d9;
     }
-    .heading{
-        text-align: center;
-        color: #B9B28A;
-        font-size: 50px;
+    .heading {
+      text-align: center;
+      color: #b9b28a;
+      font-size: 50px;
     }
-    .main-container{
-        background-color: #504B38;
-        padding: 20px;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        display: flex;
-        justify-content: center;
+    .main-container {
+      background-color: #504b38;
+      padding: 20px;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
     }
-    .task{
-        font-size: 20px;
-        margin: 0 10px;
+    .task {
+      font-size: 20px;
+      margin: 0 10px;
+    }
+    .priority {
+      font-size: 20px;
+      margin: 0 10px;
+    }
+    .add-btn {
+      font-size: 20px;
+      background-color: #ebe5c2;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+    .task-card {
+      border: 1px solid black;
+      margin: 10px;
+      padding: 10px;
+      position: relative;
+      border-radius: 10px;
 
     }
-    .priority{
-        font-size: 20px;
-        margin: 0 10px;
+    .task-card-title{
+font-size: 20px;
+margin: 0;
+
     }
-    .add-btn{
-        font-size: 20px;
-        background-color: #EBE5C2;
-        border: none;
-        padding: 10px 20px;
-        cursor: pointer;
+    .task-card-priority{
+position: absolute;
+right: 10px;
+top: 10px;
+width: 80px;
+text-align: center;
+border-radius: 20px;
+background-color:  #ebe5c2;
+
     }
-</style>
-<body>
+  </style>
+  <body>
     <h1 class="heading">To Do List</h1>
 
-    <div  class="main-container">
-    <input type="text" id="task" class="task">
-    <select id="priority" class="priority">
+    <div class="To-Do-List" id="To-Do-List"></div>
+
+    <div class="main-container">
+      <input type="text" id="task" class="task" />
+      <select id="priority" class="priority">
         <option value="high">High</option>
         <option value="medium">Medium</option>
         <option value="low">Low</option>
-    </select>
+      </select>
 
-    <button onclick="addTask()" class="add-btn">Add Task</button>
-</div>
+      <button onclick="addTask()" class="add-btn">Add Task</button>
+    </div>
 
-<script>
-    const tasks = [];
-    function addTask(){
-        const inputTaskElement = document.getElementById('task');
-        const inputPriorityElement = document.getElementById('priority');
+    <script>
+      const tasks = [];
+      function addTask() {
+        const inputTaskElement = document.getElementById("task");
+        const inputPriorityElement = document.getElementById("priority");
 
         const newTask = {
-            task: inputTaskElement.value,
-            priority: inputPriorityElement.value || 'medium'
+          task: inputTaskElement.value,
+          priority: inputPriorityElement.value || "medium",
+        };
+
+        tasks.unshift(newTask);
+
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+        renderToDoList(tasks);
+      }
+
+      const savedTasks = localStorage.getItem("tasks");
+
+      if (savedTasks) {
+        tasks = JSON.parse(savedTasks);
+      }
+
+      function renderToDoList(taskList) {
+        const todoListElement = document.getElementById("To-Do-List");
+        todoListElement.innerHTML = "";
+        for (let i = 0; i < taskList.length; i++) {
+          const taskObj = taskList[i];
+
+          todoListElement.innerHTML += `<div class="task-card">
+        <h3 class="task-card-title">${taskObj.task}</h3>
+        <span class="task-card-priority">${taskObj.priority}</span>
+        </div>`;
         }
-
-        tasks.push(newTask);
-
-        console.log(tasks)
-    }
-</script>
-</body>
+      }
+      renderToDoList(tasks);
+    </script>
+  </body>
 </html>
