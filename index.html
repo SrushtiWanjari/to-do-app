@@ -56,5 +56,22 @@
 
     <button onclick="addTask()" class="add-btn">Add Task</button>
 </div>
+
+<script>
+    const tasks = [];
+    function addTask(){
+        const inputTaskElement = document.getElementById('task');
+        const inputPriorityElement = document.getElementById('priority');
+
+        const newTask = {
+            task: inputTaskElement.value,
+            priority: inputPriorityElement.value || 'medium'
+        }
+
+        tasks.push(newTask);
+
+        console.log(tasks)
+    }
+</script>
 </body>
 </html>
