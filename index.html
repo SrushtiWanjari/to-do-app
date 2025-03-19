@@ -3,128 +3,132 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>To-Do-App</title>
-  </head>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #f8f3d9;
-    }
-    .heading {
-      text-align: center;
-      color: #b9b28a;
-      font-size: 50px;
-    }
-    .main-container {
-      background-color: #504b38;
-      padding: 20px;
-      position: fixed;
+    <title></title>
+
+    <style>
+      body{
+        background-color: #F6F0F0;
+      }
+      .heading {
+        text-align: center;
+      }
+      .todo-item {
+        border: 2px solid #D5C7A3;
+        font-size: 30px;
+        padding: 8px;
+        margin: 5px;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .del-btn {
+        cursor: pointer;
+        height: 30px;
+      }
+
+      .tasks-container {
+        height: 250px;
+        overflow-y: scroll;
+      }
+
+      .task-input-container {
+        position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      display: flex;
-      justify-content: center;
-    }
-    .task {
-      font-size: 20px;
-      margin: 0 10px;
-    }
-    .priority {
-      font-size: 20px;
-      margin: 0 10px;
-    }
-    .add-btn {
-      font-size: 20px;
-      background-color: #ebe5c2;
-      border: none;
-      padding: 10px 20px;
-      cursor: pointer;
-    }
-    .task-card {
-      border: 1px solid black;
-      margin: 10px;
-      padding: 10px;
-      position: relative;
-      border-radius: 10px;
-    }
-    .task-card-title {
-      font-size: 20px;
-      margin: 0;
-    }
-    .task-card-priority {
-      position: absolute;
-      right: 40px;
-      top: 10px;
-      width: 80px;
-      text-align: center;
-      border-radius: 20px;
-      background-color: #ebe5c2;
-    }
-    .del-icon {
-      height: 20px;
-      position: absolute;
-      right: 10px;
-      top: 10px;
-    }
-  </style>
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin: 10px;
+      }
+
+      .task-input {
+        width: 50%;
+        border-radius: 10px;
+        padding: 5px 10px;
+        font-size: 20px;
+        border: 1px dashed #000 ;
+      }
+
+      .btn-add {
+        border-radius: 40px;
+        background-color: #BDB395;
+        color: #000;
+        padding: 15px 30px;
+        border: none;
+        cursor: pointer;
+        font-size: 20px;
+      }
+    </style>
+  </head>
+
   <body>
-    <h1 class="heading">To Do List</h1>
+    <h1 class="heading">ToDo App</h1>
 
-    <div class="To-Do-List" id="To-Do-List"></div>
+    <div id="tasks-container" class="tasks-container"></div>
 
-    <div class="main-container">
-      <input type="text" id="task" class="task" />
-      <select id="priority" class="priority">
-        <option value="high">High</option>
-        <option value="medium">Medium</option>
-        <option value="low">Low</option>
-      </select>
-
-      <button onclick="addTask()" class="add-btn">Add Task</button>
+    <div class="task-input-container">
+      <input
+        type="text"
+        id="task-input"
+        placeholder="Enter a task"
+        class="task-input"
+      />
+      <button onclick="addTask()" class="btn-add">Add Task</button>
     </div>
 
     <script>
       const tasks = [];
-      function addTask() {
-        const inputTaskElement = document.getElementById("task");
-        const inputPriorityElement = document.getElementById("priority");
 
-        const newTask = {
-          task: inputTaskElement.value,
-          priority: inputPriorityElement.value || "medium",
-        };
+      function loadFromLocalStorage() {
+        const allTasks = JSON.parse(localStorage.getItem("allTasks"));
 
-        tasks.unshift(newTask);
+        if (allTasks) {
+          tasks.push(...allTasks);
+        }
 
-        localStorage.setItem("tasks", JSON.stringify(tasks));
-        renderToDoList(tasks);
+        loadTasks();
       }
+      loadFromLocalStorage();
 
-      const savedTasks = localStorage.getItem("tasks");
+      function loadTasks() {
+        localStorage.setItem("allTasks", JSON.stringify(tasks));
 
-      if (savedTasks) {
-        tasks = JSON.parse(savedTasks);
-      }
+        const tasksContainer = document.getElementById("tasks-container");
+        tasksContainer.innerHTML = "";
 
-      function renderToDoList(taskList) {
-        const todoListElement = document.getElementById("To-Do-List");
-        todoListElement.innerHTML = "";
-        for (let i = 0; i < taskList.length; i++) {
-          const taskObj = taskList[i];
-
-          todoListElement.innerHTML += `<div class="task-card">
-        <h3 class="task-card-title">${taskObj.task}</h3>
-        <span class="task-card-priority">${taskObj.priority}</span>
-        <img src="bin.png" onclick=" removeTask(${i})"class="del-icon"/>
-        </div>`;
+        for (const task of tasks) {
+          tasksContainer.innerHTML += `
+        <div class="todo-item">
+          ${task}
+          <img src="bin.png" alt="Delete" class="del-btn"   onclick="deleteTask('${task}')"/>
+        
+        </div>
+        `;
         }
       }
 
-      function removeTask(taskIndex) {
+      function deleteTask(task) {
+        const taskIndex = tasks.indexOf(task);
         tasks.splice(taskIndex, 1);
-        localStorage.setItem("tasks", JSON.stringify(tasks));
-        renderToDoList(tasks);
+
+        loadTasks();
+      }
+
+      function addTask() {
+        const taskInputElement = document.getElementById("task-input");
+        const task = taskInputElement.value;
+
+        if (!task) {
+          alert("Please enter a task");
+          return;
+        }
+
+        tasks.unshift(task);
+        loadTasks();
+
+        taskInputElement.value = "";
       }
     </script>
   </body>
